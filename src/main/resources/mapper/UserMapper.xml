@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper">
+	
+	<select id="getUserById" parameterType="int" resultMap="getUserByIdMap">
+		select u.*, g.id as gid, g.name as gname from t_user u, t_user_group tg, t_group g where
+		u.id = tg.userId and g.id = tg.groupId and u.id = #{id}
+	</select>
+	<resultMap type="com.ymd.learn.model.User" id="getUserByIdMap">
+		<id column="id" property="id"/>
+		<result column="name" property="name" />
+		<collection property="groups" ofType="com.ymd.learn.model.Group">
+			<id column="gid" property="id"/>
+			<result column="gname" property="name" />
+		</collection>
+	</resultMap>
+	
+</mapper>
